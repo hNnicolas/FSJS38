@@ -3,61 +3,62 @@ const jwt = require("jsonwebtoken")
 const secret = 'fsjs38'
 
 module.exports = (UsersModel) => {
-        const saveUser = async (req, res) => {
-            try{
-                const { firstname, lastname, email, password } = req.body
+    // Fonction pour enregistrer un nouvel utilisateur
+    const saveUser = async (req, res) => {
+        try {
+            const { firstname, lastname, email, password } = req.body // Extraction des données de la requête
 
-        // Vérification si le nom ou prénom contient un chiffre
-        if (/\d/.test(firstname) || /\d/.test(lastname)) {
-            return res.status(400).json({ msg: "Le prénom et le nom ne doivent pas contenir de chiffres !" })
-        }
+            // Vérification si le nom ou prénom contient des chiffres
+            if (/\d/.test(firstname) || /\d/.test(lastname)) {
+                return res.status(400).json({ msg: "Le prénom et le nom ne doivent pas contenir de chiffres !" })
+            }
 
-        // Vérification si le nom ou prénom contient un charactère spécial défini
-        const nameRegex = /^[a-zA-Zéèïëîôû-]+$/
-        if (!nameRegex.test(firstname) || !nameRegex.test(lastname)) {
-            return res.status(400).json({ msg: "Le prénom et le nom ne contiennent que des lettres ou les caractères spéciaux (é, è, -, ï, î, ë, ô, û) !" })
-        }
+            // Vérification si le nom ou prénom contient uniquement des lettres ou certains caractères spéciaux
+            const nameRegex = /^[a-zA-Zéèïëîôû-]+$/
+            if (!nameRegex.test(firstname) || !nameRegex.test(lastname)) {
+                return res.status(400).json({ msg: "Le prénom et le nom ne contiennent que des lettres ou les caractères spéciaux (é, è, -, ï, î, ë, ô, û) !" })
+            }
 
-        // Vérification du format de l'email
-        const emailRegex = /^[a-zA-Z0-9._%+-ïîëôû]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
-        if (!emailRegex.test(email)) {
-            return res.status(400).json({ msg: "Adresse email invalide !" })
-        }
+            // Vérification du format de l'adresse email
+            const emailRegex = /^[a-zA-Z0-9._%+-ïîëôû]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+            if (!emailRegex.test(email)) {
+                return res.status(400).json({ msg: "Adresse email invalide !" })
+            }
 
-        // Vérification du mot de passe robuste
-        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/
-        if (!passwordRegex.test(password)) {
-            return res.status(400).json({ msg: "Le mot de passe doit contenir au moins 8 caractères, dont une majuscule, une minuscule, un chiffre et un caractère spécial !" })
-        }
+            // Vérification de la robustesse du mot de passe
+            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/
+            if (!passwordRegex.test(password)) {
+                return res.status(400).json({ msg: "Le mot de passe doit contenir au moins 8 caractères, dont une majuscule, une minuscule, un chiffre et un caractère spécial !" })
+            }
+
+            // Vérification si l'utilisateur existe déjà avec cet email
             const users = await UsersModel.getUserByEmail(req.body.email)
-             if(users.code){ 
-                res.status(500).json({msg: "Oups, une erreur est survenue!"})
+            if (users.code) {
+                res.status(500).json({ msg: "Oups, une erreur est survenue!" })
             } else {
-                if(users.length > 0){ // Si l'email de l'utilisateur est déjà existant
-                    res.status(401).json({msg: "Vous ne pouvez pas créer de compte avec ces identifiants!"})
-                } else { // we all good and we save the new user
+                if (users.length > 0) { // Si l'email est déjà utilisé
+                    res.status(401).json({ msg: "Vous ne pouvez pas créer de compte avec ces identifiants!" })
+                } else { // Enregistrement de l'utilisateur si tout est valide
                     const user = await UsersModel.saveOneUser(req)
-                   if(user.code){ 
-                        res.json({status:401, msg: "Oups, une erreur est survenue!"})
-                   } else { // We did it boys  !
-                        res.json({status:200, msg: "L'utilisateur a bien été enregistré!"})
-                        console.log("user save")
-                   }
+                    if (user.code) {
+                        res.json({ status: 401, msg: "Oups, une erreur est survenue!" })
+                    } else {
+                        // L'utilisateur a bien été enregistré
+                        res.json({ status: 200, msg: "L'utilisateur a bien été enregistré!" })
+                    }
                 }
             }
-        } catch(err) {
-            res.status(500).json({msg: "Oups, une erreur est survenue!"})
+        } catch (err) {
+            res.status(500).json({ msg: "Oups, une erreur est survenue!" })
         }
-
     }
     
+    // Fonction pour authentifier un utilisateur
     const loginUser = async (req, res) => {
         try {
-            // Récupération de l'utilisateur par email
+            // Vérification de l'existence de l'utilisateur par email
             const check = await UsersModel.getUserByEmail(req.body.email)
-    
-            // Vérification des erreurs de requête
-            if (check.code) {
+            if (check.code) { 
                 return res.json({ status: 500, msg: "Oups, une erreur est survenue 1!" })
                 
             }
@@ -102,21 +103,22 @@ module.exports = (UsersModel) => {
     
             // Réponse avec le token et les informations de l'utilisateur
             res.json({ status: 200, token: token, user: user })
-            console.log("Bravo, tu t'es connecté Bro!")
     
         } catch (err) {
             res.json({ status: 500, msg: "Oups, une erreur est survenue 3!" })
         }
     }
     
+    // Fonction pour mettre à jour les informations d'un utilisateur
     const updateUser = async (req, res) => {
         try {
-          console.log(`Mise à jour de l'utilisateur ID ${req.params.id} avec les données:`, req.body)
-
           const result = await UsersModel.updateUser(req, req.params.id)
+
+          // Gestion des erreurs lors de la mise à jour
           if (result.code) {
             res.status(500).json({ msg: 'Erreur mise à jour de l\'utilisateur.' })
           } else {
+            // Si mise à jour réussie, récupération de tous les utilisateurs avec le même statut
             const updatedUser = await UsersModel.getAllUsersByStatus(req.body.status)
             if (updatedUser.code) {
               res.status(500).json({ msg: 'Oups, une erreur est survenue!' })
@@ -129,55 +131,63 @@ module.exports = (UsersModel) => {
         }
       }
 
+      // Fonction pour changer le statut d'un utilisateur
       const updateUserStatus = async (req, res) => {
         try {
-            const userId = req.params.id
-            const newStatus = req.body.status
+            const userId = req.params.id // Récupération de l'ID de l'utilisateur
+            const newStatus = req.body.status // Nouveau statut à appliquer
     
             const result = await UsersModel.updateUserStatus(userId, newStatus)
     
             if (result.code) {
                 res.status(500).json({ msg: 'Erreur lors de la mise à jour du statut de l\'utilisateur.' })
             } else {
-                console.log(result, "Bravo, la statut est modifié")
                 res.status(200).json({ msg: 'Statut de l\'utilisateur mis à jour avec succès.' })
             }
         } catch (err) {
             res.status(500).json({ msg: 'Oups, une erreur est survenue!' })
         }
     }
-      
+    
+    // Fonction pour mettre à jour un utilisateur en fonction de son ID et récupérer tous les utilisateurs par statut
     const updateAllUsersByStatus = async (req, res) => {
         try {
-            console.log(`Mise à jour du statut des utilisateurs avec le status ${req.params.status}`)
+            // Met à jour l'utilisateur avec l'ID fourni dans les paramètres de la requête
             const users = await UsersModel.updateUser(req, req.params.id)
+            // Vérifie s'il y a une erreur lors de la mise à jour
             if(users.code){
                 res.json({status: 500, msg: "Erreur mise à jour de l'utilisateur."})
             } else {
+                // Récupère tous les utilisateurs ayant un statut spécifique
                 const newUsers = await UsersModel.getAllUsersByStatus(req.params.status)
+                // Vérifie s'il y a une erreur lors de la récupération des utilisateurs par statut
                 if(newUsers.code) {
                     res.json({status: 500, msg: "Oups, une erreur est survenue!"})
                 } else {
-                    console.log("Utilisateur modifié avec succès")
+                    // Formate les données du premier utilisateur récupéré pour la réponse
                     const myUser = {
                         id: newUsers[0].id,
                         firstname: newUsers[0].firstname,
                         lastname: newUsers[0].lastname,
                         email: newUsers[0].email
-                    };
+                    }
+                    // Retourne une réponse avec l'utilisateur mis à jour et le nouveau statut
                     res.json({status: 200, msg: "Utilisateur modifié!", newUsers: myUser})
                 }
             }
         } catch(err) {
+            // En cas d'erreur, renvoye une réponse avec un statut 500
             res.json({status: 500, msg: "Oups, une erreur est survenue!"})
         }
     }
 
+    // Fonction pour récupérer un utilisateur par son ID
     const getOneUser = async (req, res) => {
         try {
             const userId = req.params.id  // Récupère l'ID depuis les paramètres de la requête
-            const user = await UsersModel.getOneUser(userId)
+            const user = await UsersModel.getOneUser(userId) // Exécute une requête pour récupérer l'utilisateur par son ID
             
+            // Vérifie si l'utilisateur existe dans la base de données
             if (user.length === 0) {
                 return res.status(404).json({ msg: "Utilisateur non trouvé" })
             }
@@ -191,34 +201,41 @@ module.exports = (UsersModel) => {
                 role: user[0].role
             })
         } catch (err) {
+            // En cas d'erreur, renvoye une réponse avec un statut 500
             res.status(500).json({ msg: "Oups, une erreur est survenue!" })
         }
     }
     
+    // Fonction pour récupérer tous les utilisateurs
     const getAllUsers = async (req, res) => {
         try {
             const users = await UsersModel.getAllUsers()
             if(users.code){
+                // Si une erreur se produit pendant la récupération des utilisateurs
                 res.json({status: 500, msg: "Oups, une erreur est survenue!"})
             } else {
+                // Envoie les utilisateurs récupérés avec un statut de succès
                 res.json({status: 200, result: users})
             }
         } catch(err) {
+            // En cas d'erreur, renvoye une réponse avec un statut 500
             res.json({status: 500, msg: "Oups, une erreur est survenue!"})
         }
     }
     
+    // Fonction pour supprimer un utilisateur
     const deleteUser = async (req, res) => {
         try {
-            console.log(`ID de l'utilisateur à supprimer: ${req.params.id}`)
-            const deleteUser = await UsersModel.deleteOneUser(req.params.id)
+            const deleteUser = await UsersModel.deleteOneUser(req.params.id) // Supprime l'utilisateur par son ID
             if(deleteUser.code){
+                // Si une erreur se produit lors de la suppression de l'utilisateur
                 res.json({status: 500, msg: "Oups, une erreur est survenue!"})
             } else {
-                console.log("Utilisateur supprimé avec succès.")
+                // Envoie une réponse de succès lorsque l'utilisateur est supprimé
                 res.json({status: 200, msg: "Utilisateur supprimé!"})
             }
         } catch(err) {
+            // En cas d'erreur, renvoye une réponse avec un statut 500
             res.json({status: 500, msg: "Oups, une erreur est survenue!"})
         }
     }
