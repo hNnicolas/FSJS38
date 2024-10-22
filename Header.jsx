@@ -8,7 +8,7 @@ import { faHome, faGears, faSignOutAlt, faUser, faSearch } from '@fortawesome/fr
 
 const Header = () => {
   const user = useSelector(selectUser)
-  console.log("Données utilisateur dans le store :", user)
+  // console.log("Données utilisateur dans le store :", user)
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const [searchTerm, setSearchTerm] = useState('')
@@ -17,11 +17,11 @@ const Header = () => {
     const token = window.localStorage.getItem('b4y-token')
     const savedUserInfos = window.localStorage.getItem('user-infos')
 
-    console.log("Infos utilisateur récupérées :", savedUserInfos)
+    // console.log("Infos utilisateur récupérées :", savedUserInfos)
   
     if (token && savedUserInfos) {
       const parsedUserInfos = JSON.parse(savedUserInfos)
-      console.log("Infos utilisateur après parsing :", parsedUserInfos)
+      // console.log("Infos utilisateur après parsing :", parsedUserInfos)
       
       // Si un token et des infos utilisateur existent, les restaurer dans Redux
       dispatch(connectUser(parsedUserInfos))
