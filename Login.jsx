@@ -14,7 +14,7 @@ const Login = (props) => {
     // Fonction exécutée lors de la soumission du formulaire
     const onSubmitForm = (e) => {
         e.preventDefault()
-        setError(null) 
+        setError(null)
 
         // Préparation des données à envoyer pour l'authentification
         const datas = {
@@ -25,30 +25,30 @@ const Login = (props) => {
         // Appel à la fonction d'authentification utilisateur
         loginUser(datas)
             .then((res) => {
-                // Vérification de la réponse de l'API
                 if (res.status === 200) {
-                    // Stocker le token dans le localStorage
+                    // Utilisateur non banni
                     window.localStorage.setItem("b4y-token", res.token)
-                    window.localStorage.setItem("user-infos", JSON.stringify(res.user)) 
-                    // Créer un objet utilisateur à pousser dans le store de redux
+                    window.localStorage.setItem("user-infos", JSON.stringify(res.user))
+
                     let newUser = res.user
                     newUser.token = res.token
-
-                    // Connecte l'utilisateur à redux
                     dispatch(connectUser(newUser))
 
-                    // Redirection selon le rôle de l'utilisateur
+                    // Redirection selon le rôle
                     if (newUser.role.toLowerCase() === "admin") {
-                        setRedirect("/admin"); // Redirige vers la page admin si l'utilisateur est un admin
-                    } else if (newUser.status === 0) { // Vérifier si l'utilisateur est banni
-                        setError("Votre compte a été banni et vous ne pouvez pas vous connecter.")
-                        window.localStorage.removeItem("b4y-token")
+                        setRedirect("/admin")
                     } else {
-                        setRedirect("/") // Redirige vers la page d'accueil pour les utilisateurs normaux
+                        setRedirect("/")
                     }
+                } else if (res.status === 403) {
+                    // Si l'utilisateur est banni
+                    setError(res.msg) // Utilise le message du backend
+                    window.localStorage.removeItem("b4y-token")
                 }
             })
-            .catch((err) => console.log(err))
+            .catch((err) => {
+                setError("Une erreur est survenue lors de la connexion.")
+            })
     }
 
     // Efface le message d'erreur après 5 secondes
@@ -72,22 +72,22 @@ const Login = (props) => {
         <section id="login-container">
             <h2 id="login-title">Se connecter</h2>
 
-            {error !== null && <p id="login-error">{error}</p>} 
+            {error !== null && <p id="login-error">{error}</p>}
 
             <form id="login-form" onSubmit={onSubmitForm}>
                 <input
                     type="email"
                     id="email"
                     placeholder="Votre mail"
-                    onChange={(e) => setEmail(e.currentTarget.value)} 
+                    onChange={(e) => setEmail(e.currentTarget.value)}
                 />
                 <input
                     type="password"
                     id="password"
                     placeholder="Votre mot de passe"
-                    onChange={(e) => setPassword(e.currentTarget.value)} 
+                    onChange={(e) => setPassword(e.currentTarget.value)}
                 />
-                <input type="submit" id="submit" value="Se connecter" /> 
+                <input type="submit" id="submit" value="Se connecter" />
             </form>
         </section>
     )
