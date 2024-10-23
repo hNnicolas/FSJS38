@@ -1,0 +1,124 @@
+@import 'variables';
+
+#add-tome-section {
+  background-color: $background-color;
+  padding: 20px;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+  max-width: 800px;
+  margin: 0 auto;
+
+  h2 {
+    color: $primary-color;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  #error-message {
+    color: $error-color;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+
+  #success-message {
+    background-color: $success-color;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+    text-align: center;
+    transition: opacity 0.5s ease;
+    display: block;
+  }
+
+  .fade-out {
+    opacity: 0;
+  }
+
+  #b-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    input[type="text"],
+    input[type="file"],
+    textarea {
+      padding: 10px;
+      border: 1px solid $primary-color;
+      border-radius: $border-radius;
+      font-size: 16px;
+      width: 100%;
+    }
+
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    button {
+      background-color: $secondary-color;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: $border-radius;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: $hover-color;
+      }
+
+      &:disabled {
+        background-color: $disabled-color;
+        cursor: not-allowed;
+      }
+    }
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+
+  // Tablettes
+  #add-tome-section {
+    padding: 15px;
+  }
+
+  #b-form {
+
+    input[type="text"],
+    input[type="file"],
+    textarea {
+      font-size: 14px;
+    }
+
+    button {
+      padding: 10px;
+      font-size: 14px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+
+  // Mobiles
+  #add-tome-section {
+    padding: 10px;
+  }
+
+  #b-form {
+
+    input[type="text"],
+    input[type="file"],
+    textarea {
+      font-size: 12px;
+    }
+
+    button {
+      padding: 8px;
+      font-size: 12px;
+    }
+  }
+}

@@ -1,0 +1,24 @@
+// _normalize.scss
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  color: $text-color;
+  background-color: $background-color;
+  line-height: 1.6;
+}
+
+a {
+  text-decoration: none;
+  color: $link-color;
+
+  &:hover {
+    color: $hover-color;
+  }
+}

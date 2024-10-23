@@ -1,0 +1,135 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Indie+Flower&display=swap');
+@import 'variables';
+@import 'mixins';
+
+#header-nav {
+  background-color: $primary-color;
+  background-image: url('../assets/logo/demon-background-header.jpg');
+  background-size: cover;
+  background-position: center;
+
+  #header-nav-bar {
+    display: flex;
+    align-items: center;
+    background-color: $box-shadow;
+    justify-content: space-between;
+    flex-direction: row;
+
+    #header-list1,
+    #header-list2 {
+      @include flex-center;
+
+      img {
+        height: 50px;
+        margin-right: 20px;
+        border-radius: 30px;
+        padding: 5px;
+      }
+
+      a {
+        color: $accent-color;
+        margin-right: 15px;
+
+        &:hover {
+          color: $hover-color;
+        }
+      }
+    }
+
+    // Style pour l'input de recherche
+    input {
+      padding: 2px;
+      width: 80px;
+      margin-left: 5px;
+      background-color: $accent-color;
+      border: none;
+      border-radius: 5px;
+
+      // Ajustements supplémentaires pour le focus
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 5px darkgoldenrod;
+      }
+    }
+
+
+    // Style pour le bouton de recherche
+    .search-button {
+      padding: 2px;
+      background-color: $accent-color;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: darkgoldenrod;
+      }
+    }
+  }
+}
+
+
+#header-pict {
+  position: relative;
+  text-align: center;
+  color: white;
+  opacity: 0.8;
+  padding: 40px 20px;
+  min-height: 300px;
+
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: "Dancing Script", cursive;
+  color: lightyellow;
+
+  h1 {
+    padding: 10px;
+    display: inline-block;
+    background-color: $box-shadow;
+    z-index: 1;
+    font-size: 2.5rem;
+
+
+
+    @media (max-width: 768px) {
+      font-size: 2rem;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 1.5rem;
+    }
+
+  }
+
+  p {
+    color: $accent-color;
+    margin-top: 10px;
+    font-size: 1.2em;
+    background-color: $box-shadow;
+
+    @media (max-width: 768px) {
+      font-size: 1em;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 0.9em;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    min-height: 250px;
+    padding: 30px 15px;
+  }
+
+  @media (max-width: 768px) {
+    min-height: 200px;
+    padding: 20px 10px;
+  }
+
+  @media (max-width: 480px) {
+    min-height: 150px;
+  }
+}

@@ -1,0 +1,158 @@
+@import 'variables';
+
+#comment-detail {
+  margin: 20px;
+  padding: 20px;
+  background-color: $background-color;
+  color: $text-color;
+
+  #back-link {
+    display: block;
+    margin-bottom: 20px;
+    color: $link-color;
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: darken($link-color, 10%);
+    }
+  }
+
+  h2 {
+    color: $primary-color;
+  }
+
+  #user-info {
+    text-align: center;
+    margin-bottom: 20px;
+
+    h3 {
+      color: $primary-color;
+    }
+  }
+
+  #comment-info {
+    margin-bottom: 20px;
+
+    #tableComments {
+      width: 100%;
+      border-collapse: collapse;
+      box-shadow: $box-shadow;
+
+      thead {
+        background-color: $primary-color;
+        color: white;
+
+        th {
+          padding: 15px;
+          border-bottom: 2px solid $accent-color;
+          text-align: left;
+        }
+      }
+
+      tbody {
+        tr {
+          &:nth-child(even) {
+            background-color: lighten($background-color, 5%);
+          }
+
+          &:hover {
+            background-color: $hover-color;
+            color: white;
+          }
+
+          td {
+            padding: 15px;
+            border-bottom: 1px solid $disabled-color;
+          }
+        }
+      }
+
+      tfoot {
+        tr {
+          td {
+            padding: 15px;
+          }
+        }
+      }
+    }
+  }
+
+  #status-buttons {
+    display: flex;
+    justify-content: space-between;
+
+    #btn-unpublish {
+      background-color: rgba($error-color, 0.7);
+      border-color: darken($error-color, 10%);
+
+      &:hover {
+        background-color: $error-color;
+        border-color: darken($error-color, 15%);
+      }
+    }
+
+    #btn-publish {
+      background-color: $success-color;
+      border-color: darken($success-color, 10%);
+
+      &:hover {
+
+        background-color: $success-color;
+        border-color: darken($success-color, 15%);
+      }
+    }
+
+    button {
+      border: 2px solid transparent;
+      border-radius: $border-radius;
+      color: white;
+      padding: 10px 20px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, border-color 0.3s ease;
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+
+
+  // Responsivité
+  @media (max-width: 768px) {
+
+    #tableComments thead th,
+    #tableComments tbody td {
+      font-size: 0.9rem;
+      padding: 10px;
+    }
+  }
+
+  @media (max-width: 480px) {
+
+    #tableComments thead th,
+    #tableComments tbody td {
+      font-size: 0.8rem;
+    }
+
+    #status-buttons {
+      flex-direction: column;
+
+      button {
+        margin-bottom: 10px;
+      }
+    }
+  }
+
+  // Styles pour le statut du commentaire
+  #status-sensitive {
+    color: red;
+    font-weight: bold;
+  }
+
+  #status-published {
+    color: green;
+    font-weight: bold;
+  }
+}

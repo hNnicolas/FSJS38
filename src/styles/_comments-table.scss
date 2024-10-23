@@ -1,0 +1,187 @@
+#comments-table-container {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+
+  #comments-table {
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    table-layout: fixed;
+
+    thead {
+      background-color: $primary-color;
+      color: white;
+
+      th {
+        padding: 10px;
+        border-bottom: 2px solid $accent-color;
+        text-align: center;
+        font-size: 0.9rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+
+    tbody {
+      tr {
+        &:nth-child(even) {
+          background-color: lighten($background-color, 5%);
+        }
+
+        &:hover {
+          background-color: $hover-color;
+          color: white;
+        }
+
+        td {
+          padding: 8px;
+          text-align: center;
+          border-bottom: 1px solid $disabled-color;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          font-size: 0.85rem;
+
+          /* Ajustement du contenu texte pour qu'il s'adapte à l'écran */
+          word-wrap: break-word;
+          white-space: normal;
+        }
+      }
+    }
+
+    /* Responsivité entre 600px et 900px */
+    @media (max-width: 900px) {
+
+      td,
+      th {
+        font-size: 0.8rem;
+        padding: 6px;
+      }
+
+      td {
+        white-space: normal;
+      }
+
+      thead th {
+        text-align: center;
+      }
+    }
+
+    /* Pour les très petits écrans (en dessous de 600px) */
+    @media (max-width: 600px) {
+      thead {
+        display: none;
+      }
+
+      tbody {
+        tr {
+          display: flex;
+          flex-direction: column;
+          margin-bottom: 10px;
+          padding: 10px;
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+          td {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px;
+            border: none;
+            white-space: normal;
+
+            &:before {
+              content: attr(data-label);
+              font-weight: bold;
+              padding-right: 5px;
+              flex-basis: 40%;
+              white-space: nowrap;
+            }
+          }
+
+          /* Le lien et le bouton s'affichent en dessous du texte */
+          .action-buttons {
+            display: flex;
+            flex-direction: column;
+            margin-top: 5px;
+
+            a,
+            button {
+              margin: 5px 0;
+              width: 100%;
+            }
+          }
+        }
+      }
+    }
+
+    /* Pour les écrans très petits (moins de 300px) */
+    @media (max-width: 300px) {
+      tbody {
+        tr {
+          td {
+            display: block;
+            text-align: left;
+
+            &:before {
+              display: inline-block;
+              width: 100%;
+              font-weight: bold;
+            }
+
+            .action-buttons {
+              display: block;
+              margin-top: 10px;
+
+              a,
+              button {
+                width: 100%;
+                margin: 5px 0;
+                text-align: center;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+/* Style des boutons */
+button {
+  border: none;
+  border-radius: $border-radius;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  margin: 0 5px;
+}
+
+#btn-delete {
+  background-color: $error-color;
+  color: white;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: darken($error-color, 10%);
+  }
+}
+
+#btn-view {
+  background-color: $primary-color;
+  color: white;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: darken($primary-color, 10%);
+  }
+}
+
+/* Responsivité pour les boutons */
+@media (max-width: 600px) {
+  button {
+    font-size: 0.8rem;
+    padding: 8px;
+  }
+}

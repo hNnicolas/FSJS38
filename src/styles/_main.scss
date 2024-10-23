@@ -1,0 +1,178 @@
+@import 'variables';
+
+#home {
+  padding: 20px;
+  text-align: center;
+
+  #home-presentation {
+    font-family: 'Cursive', sans-serif;
+    font-size: 48px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #34495e;
+  }
+
+  #main-image-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+
+    #demonHome {
+      max-width: 80%;
+      height: auto;
+      cursor: pointer;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      opacity: 0.9;
+
+      &:hover {
+        transform: scale(1.05);
+        opacity: 1;
+      }
+    }
+  }
+
+  #like-section {
+    margin: 20px 0;
+
+    button {
+      background-color: $accent-color;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      border-radius: $border-radius;
+      cursor: pointer;
+      font-size: 16px;
+
+      &:hover {
+        background-color: darken($accent-color, 10%);
+      }
+
+      #like-count {
+        margin-left: 10px;
+      }
+    }
+  }
+
+  #comment-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 10px;
+
+    #comments {
+      width: 100%;
+      margin-bottom: 20px;
+      text-align: left;
+
+      #comments-title {
+        font-size: 24px;
+        color: #2c3e50;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+
+      #emoticons {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin-bottom: 20px;
+
+        .fa-icon {
+          font-size: 40px;
+          cursor: pointer;
+          transition: transform 0.3s, color 0.3s;
+          margin: 0 10px;
+          color: #f39c12;
+
+          &:hover {
+            transform: scale(1.3) rotate(10deg);
+            color: #e74c3c;
+          }
+
+          &.active {
+            color: #27ae60;
+            transform: scale(1.2);
+            animation: bounce 0.5s;
+          }
+        }
+
+        #laugh-container,
+        #sad-container,
+        #hearts-container,
+        #angry-container,
+        #stars-container {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          flex: 1;
+        }
+
+        #laugh-count,
+        #sad-count,
+        #hearts-count,
+        #angry-count,
+        #stars-count {
+          margin-top: 5px;
+          font-size: 18px;
+          color: #7f8c8d;
+          font-family: 'Comic Sans MS', cursive, sans-serif;
+        }
+      }
+    }
+  }
+}
+
+// Responsive adjustments pour les écrans de format ordinateur
+@include responsive(600px) {
+  #emoticons {
+    .fa-icon {
+      margin: 0 20px;
+    }
+  }
+}
+
+// Animation de rebond
+@keyframes bounce {
+
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+
+  40% {
+    transform: translateY(-10px);
+  }
+
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+// Responsive adjustments
+@include responsive(330px) {
+  #comment-section {
+    flex-direction: column;
+  }
+
+  #emoticons {
+    .fa-icon {
+      font-size: 30px;
+      margin: 5px;
+    }
+
+    #laugh-count,
+    #sad-count,
+    #hearts-count,
+    #angry-count,
+    #stars-count {
+      font-size: 12px;
+    }
+  }
+}

@@ -1,0 +1,247 @@
+.table-container {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+
+  #tableUser {
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    table-layout: fixed;
+
+    thead {
+      background-color: $primary-color;
+      color: white;
+
+      th {
+        padding: 10px;
+        border-bottom: 2px solid $accent-color;
+        text-align: left;
+        font-size: 0.9rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+
+    tbody {
+      tr {
+        &:nth-child(even) {
+          background-color: lighten($background-color, 5%);
+        }
+
+        &:hover {
+          background-color: $hover-color;
+          color: white;
+        }
+
+        td {
+          padding: 5px;
+          text-align: left;
+          border-bottom: 1px solid $disabled-color;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          font-size: 0.85rem;
+        }
+
+        td.email-column {
+          word-wrap: break-word;
+          white-space: normal;
+          overflow: visible;
+        }
+      }
+    }
+
+    /* Responsive pour 1300px */
+    @media (max-width: 1300px) {
+
+      td,
+      th {
+        padding: 4px;
+      }
+
+      .button {
+        padding: 8px 10px;
+        font-size: 0.8rem;
+      }
+    }
+
+    /* Responsive pour 1200px */
+    @media (max-width: 1200px) {
+
+      td,
+      th {
+        display: block;
+        width: 100%;
+      }
+
+      tbody {
+        tr {
+          display: flex;
+          flex-direction: column;
+          margin-bottom: 10px;
+          padding: 10px;
+        }
+      }
+    }
+
+    /* Responsive pour 1000px */
+    @media (max-width: 1000px) {
+      tbody {
+        tr {
+          flex-direction: column;
+        }
+
+        td {
+          display: flex;
+          justify-content: space-between;
+          padding: 5px 0;
+
+          &:before {
+            content: attr(data-label);
+            font-weight: bold;
+            padding-right: 5px;
+            flex-basis: 40%;
+            white-space: nowrap;
+          }
+        }
+
+        td.email-column {
+          word-wrap: break-word;
+          white-space: normal;
+        }
+      }
+
+      .button {
+        width: 100%;
+        margin: 5px 0;
+      }
+    }
+
+    /* Responsive pour 600px et moins */
+    @media (max-width: 600px) {
+
+      td,
+      th {
+        display: block;
+        width: 100%;
+        text-align: right;
+      }
+
+      tbody {
+        tr {
+          flex-direction: column;
+        }
+
+        td {
+          display: flex;
+          justify-content: space-between;
+          padding: 5px 0;
+
+          &:before {
+            content: attr(data-label);
+            font-weight: bold;
+            padding-right: 10px;
+            white-space: nowrap;
+            flex-basis: 40%;
+          }
+
+          &:last-child {
+            display: flex;
+            flex-direction: column;
+
+            .button {
+              margin: 5px 0;
+              width: 100%;
+            }
+          }
+        }
+
+        td,
+        th {
+          white-space: normal;
+        }
+
+        td.email-column {
+          word-wrap: break-word;
+        }
+
+        .button {
+          padding: 10px;
+          margin: 5px 0;
+          width: 100%;
+          text-align: center;
+        }
+      }
+    }
+
+    /* Responsive pour 300px */
+    @media (max-width: 300px) {
+      tbody {
+        tr {
+          flex-direction: column;
+
+          td {
+            display: block;
+            width: 100%;
+            padding: 8px 0;
+          }
+
+          .button {
+            width: 100%;
+            margin: 5px 0;
+            padding: 10px 0;
+          }
+        }
+      }
+
+      th {
+        font-size: 0.8rem;
+        padding: 6px;
+      }
+    }
+  }
+}
+
+/* Style des boutons */
+.button {
+  padding: 10px 15px;
+  margin: 0 5px;
+  border: none;
+  border-radius: $border-radius;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+
+  &.authorize {
+    background-color: #4CAF50;
+    color: white;
+
+    &:hover {
+      background-color: darken(#4CAF50, 10%);
+      transform: scale(1.05);
+    }
+  }
+
+  &.delete {
+    background-color: $error-color;
+    color: white;
+
+    &:hover {
+      background-color: darken($error-color, 10%);
+      transform: scale(1.05);
+    }
+  }
+
+  &.ban {
+    background-color: #ff7f50;
+    color: white;
+    width: 120px;
+
+    &:hover {
+      background-color: darken(#ff7f50, 10%);
+      transform: scale(1.05);
+    }
+  }
+}

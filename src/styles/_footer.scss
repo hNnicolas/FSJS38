@@ -1,0 +1,23 @@
+footer {
+  background-color: $primary-color;
+  padding: 20px;
+  text-align: center;
+  color: $accent-color;
+
+  p {
+    margin: 10px 0;
+  }
+
+  a {
+    color: $accent-color;
+
+    &:hover {
+      color: $hover-color;
+    }
+  }
+
+  .footer-links span {
+    margin: 0 10px;
+  }
+
+}

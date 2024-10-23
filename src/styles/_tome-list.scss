@@ -1,0 +1,173 @@
+#tableTome {
+  margin: 20px 0;
+  width: 100%;
+  border-collapse: collapse;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow-x: auto;
+
+  thead {
+    background-color: $primary-color;
+    color: white;
+
+    th {
+      padding: 15px;
+      border-bottom: 2px solid $accent-color;
+      text-align: center;
+      /* Aligner les en-têtes au centre */
+      vertical-align: middle;
+    }
+  }
+
+  tbody {
+    tr {
+      &:nth-child(even) {
+        background-color: lighten($background-color, 5%);
+      }
+
+      &:hover {
+        background-color: $hover-color;
+        color: white;
+      }
+
+      td {
+        padding: 15px;
+        border-bottom: 1px solid $disabled-color;
+        text-align: center;
+        /* Centrer les cellules de contenu */
+        vertical-align: middle;
+        /* Assure que le contenu est bien centré verticalement */
+
+        img {
+          margin: 0 auto;
+          /* Centrer l'image */
+          max-width: 80%;
+          /* Limiter la taille de l'image pour éviter les débordements */
+          height: auto;
+        }
+
+        button {
+          background-color: red;
+          color: white;
+          border: none;
+          padding: 5px 10px;
+          border-radius: $border-radius;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+
+          &:hover {
+            background-color: darken(red, 10%);
+          }
+        }
+
+        a {
+          color: $link-color;
+          text-decoration: none;
+          padding: 5px 10px;
+          border-radius: $border-radius;
+          transition: color 0.3s ease;
+
+          &:hover {
+            color: darken($link-color, 10%);
+          }
+        }
+      }
+    }
+  }
+
+  /* Responsivité pour les petits écrans */
+  @media (max-width: 768px) {
+
+    thead th,
+    tbody td {
+      font-size: 0.9rem;
+      padding: 10px;
+    }
+  }
+
+  @media (max-width: 480px) {
+
+    thead th,
+    tbody td {
+      font-size: 0.8rem;
+    }
+  }
+
+  /* Ajustement pour les très petits écrans (moins de 350px) */
+  @media (max-width: 350px) {
+
+    table,
+    thead,
+    tbody,
+    th,
+    td,
+    tr {
+      display: block;
+      /* Affichage en blocs */
+    }
+
+    thead {
+      display: none;
+      /* Cacher les en-têtes pour économiser de l'espace */
+    }
+
+    tr {
+      margin-bottom: 10px;
+      border-bottom: 2px solid $disabled-color;
+      padding-bottom: 10px;
+    }
+
+    td {
+      text-align: right;
+      padding-left: 50%;
+      position: relative;
+      vertical-align: middle;
+    }
+
+    td::before {
+      content: attr(data-label);
+      /* Afficher les labels pour chaque champ */
+      position: absolute;
+      left: 10px;
+      font-weight: bold;
+      text-align: left;
+    }
+
+    td img {
+      display: block;
+      margin: 0 auto 10px auto;
+      /* Centrer l'image */
+      max-width: 80%;
+      height: auto;
+    }
+
+    td[data-label="Nom"],
+    td[data-label="Action"] {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    td[data-label="Action"] a,
+    td[data-label="Action"] button {
+      margin-top: 5px;
+      width: 70%;
+      /* Réduire la largeur du lien et du bouton */
+    }
+  }
+
+  /* Ajustement pour les écrans encore plus petits (moins de 300px) */
+  @media (max-width: 300px) {
+
+    td[data-label="Action"] a,
+    td[data-label="Action"] button {
+      width: 60%;
+      /* Réduire encore la largeur des boutons */
+      font-size: 0.8rem;
+      /* Réduire la taille de la police */
+      padding: 4px 8px;
+      /* Ajuster le padding pour un rendu plus compact */
+    }
+  }
+}

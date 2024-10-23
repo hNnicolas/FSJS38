@@ -1,0 +1,306 @@
+@import 'variables';
+
+#read-tome {
+  padding: 20px;
+
+  #navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+
+    button {
+      background-color: $secondary-color;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      border-radius: $border-radius;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+      flex: 1 1 auto;
+      margin: 5px;
+
+      /* Responsive adjustments */
+      @media (max-width: 768px) {
+        padding: 8px 15px;
+        font-size: 14px;
+      }
+
+      @media (max-width: 480px) {
+        padding: 6px 12px;
+        font-size: 12px;
+        width: 100%;
+      }
+
+      &:disabled {
+        background-color: $disabled-color;
+        cursor: not-allowed;
+      }
+
+      &:hover:not(:disabled) {
+        background-color: darken($secondary-color, 10%);
+      }
+    }
+  }
+
+  #image-display {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    picture {
+      position: relative;
+      max-width: 100%;
+
+      img {
+        border-radius: $border-radius;
+        box-shadow: $box-shadow;
+        transition: transform 0.3s ease, opacity 0.3s ease;
+
+        &:hover {
+          transform: scale(1.05);
+          opacity: 1;
+        }
+
+        &:hover+#tooltip {
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  #like-section {
+    margin: 20px 0;
+
+    button {
+      background-color: $accent-color;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      border-radius: $border-radius;
+      cursor: pointer;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: auto;
+      margin: 5px;
+
+      /* Responsive adjustments */
+      @media (max-width: 768px) {
+        padding: 8px 15px;
+        font-size: 14px;
+
+      }
+
+      @media (max-width: 480px) {
+        padding: 6px 12px;
+        font-size: 12px;
+        width: 100%;
+      }
+
+      &:hover {
+        background-color: darken($accent-color, 10%);
+      }
+
+      #like-count {
+        margin-left: 10px;
+      }
+    }
+  }
+
+  #comment-section {
+    background-color: $background-color;
+    border-radius: $border-radius;
+    border: 1px solid #ddd;
+    padding: 20px;
+    box-shadow: $box-shadow;
+    max-width: 1000px;
+    margin: 20px auto;
+
+    .comment {
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: $border-radius;
+      margin-bottom: 10px;
+
+      &.even {
+        background-color: #ffffff;
+      }
+
+      &.odd {
+        background-color: #F9F9FC;
+      }
+    }
+
+    #comments {
+      margin-bottom: 20px;
+    }
+
+    #comment-details {
+      background-color: #f9f9f9;
+      padding: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-bottom: 15px;
+      position: relative;
+
+      // Espace entre les commentaires
+      &:not(:last-child) {
+        margin-bottom: 10px;
+      }
+
+      .user-name {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+
+        &::before {
+          content: '';
+          display: inline-block;
+          margin-right: 8px;
+          font-family: 'FontAwesome';
+          content: '\f007';
+        }
+      }
+
+      p {
+        margin: 0;
+        color: #333;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        white-space: pre-line;
+      }
+    }
+
+    #synopsis-title {
+      color: $text-color;
+      font-size: 24px;
+      margin-bottom: 20px;
+      text-align: center;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+
+      /* Responsive adjustments */
+      @media (max-width: 768px) {
+        font-size: 20px;
+      }
+
+      @media (max-width: 480px) {
+        font-size: 18px;
+      }
+    }
+
+    #synopsis {
+      margin: 20px 0;
+
+      #synopsis-text {
+        font-size: 16px;
+        line-height: 1.6;
+        color: $text-color;
+        margin: 0 auto;
+        max-width: 800px;
+        text-align: justify;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        white-space: pre-line;
+        width: 100%;
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+          font-size: 14px;
+          max-width: 90%;
+        }
+
+        @media (max-width: 480px) {
+          font-size: 12px;
+          max-width: 100%;
+        }
+      }
+    }
+
+    h3 {
+      color: $text-color;
+      font-size: 24px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    #comments-title {
+      font-size: 24px;
+      color: #2c3e50;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    textarea {
+      width: 100%;
+      height: 140px;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: $border-radius;
+      border: 1px solid $disabled-color;
+      margin-bottom: 10px;
+      resize: vertical;
+      box-sizing: border-box;
+    }
+
+    #write-btn,
+    #share-btn {
+      display: block;
+      background-color: $secondary-color;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: $border-radius;
+      font-size: 16px;
+      cursor: pointer;
+      margin: 10px auto;
+      text-align: center;
+      width: 100%;
+      max-width: 300px;
+    }
+
+    #share-btn {
+      background-color: $accent-color;
+      margin-top: 10px;
+    }
+
+    #social-icons {
+      display: none;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 10px;
+      transition: opacity 0.5s ease, transform 0.5s ease;
+
+      &.show {
+        display: flex;
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      a {
+        color: $link-color;
+        font-size: 18px;
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}

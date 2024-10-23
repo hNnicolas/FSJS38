@@ -1,0 +1,38 @@
+.lazy-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+  padding: 20px;
+
+  // Pour éviter que l'image dépasse de son conteneur
+  object-fit: contain;
+}
+
+// Styles responsives
+@media screen and (min-width: 1200px) {
+
+  // Pour les grands écrans (ordinateur)
+  .lazy-image {
+    max-width: 80%;
+    padding: 15px;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1199px) {
+
+  // Pour les tablettes
+  .lazy-image {
+    max-width: 90%;
+    padding: 12px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+
+  // Pour les mobiles
+  .lazy-image {
+    max-width: 100%;
+    padding: 8px;
+  }
+}

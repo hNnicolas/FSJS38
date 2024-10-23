@@ -1,0 +1,35 @@
+@import 'variables';
+
+@include responsive($breakpoint-mobile) {
+  #header-nav-bar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  #burger-menu {
+    display: block;
+  }
+
+  #header-list2 {
+    display: none;
+  }
+
+  #burger-menu.active+#header-list2 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    background-color: darken($primary-color, 10%);
+    padding: 10px;
+  }
+
+  #header-pict {
+    height: 200px;
+  }
+}
+
+@include responsive($breakpoint-tablet) {
+  #header-pict h1 {
+    font-size: 1.5rem;
+  }
+}

@@ -1,0 +1,81 @@
+@import 'variables';
+
+#profil-container {
+  background-color: $background-color;
+  padding: 40px;
+  max-width: 500px;
+  margin: 0 auto;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+}
+
+#profil-title {
+  color: $primary-color;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+#profil-message {
+  color: $secondary-color;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+#profil-form {
+  display: flex;
+  flex-direction: column;
+
+  input[type="text"] {
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: $border-radius;
+    border: 1px solid $disabled-color;
+    font-size: 1rem;
+    color: $text-color;
+
+    &::placeholder {
+      color: $disabled-color;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: $primary-color;
+      box-shadow: 0 0 5px rgba($primary-color, 0.5);
+    }
+  }
+
+  #profil-submit {
+    background-color: $primary-color;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 10px;
+    border-radius: $border-radius;
+
+    &:hover {
+      background-color: $hover-color;
+    }
+  }
+}
+
+#profil-delete-btn {
+  text-align: center;
+  background-color: red;
+  color: white;
+  display: block;
+  margin: 10px auto;
+  padding: 10px;
+  border-radius: $border-radius;
+  cursor: pointer;
+  border: none;
+
+  &:hover {
+    background-color: darken(red, 10%);
+  }
+}
+
+.success-message {
+  color: green;
+  font-weight: bold;
+}
